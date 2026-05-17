@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raja7078 — LeetCode Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #181c24;
+    --border: rgba(255,255,255,0.06);
+    --accent: #00ff88;
+    --accent2: #ffa800;
+    --accent3: #ff4444;
+    --accent4: #4fc3f7;
+    --text: #e8eaf0;
+    --muted: #6b7280;
+    --glow: rgba(0,255,136,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Ambient glow blobs */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px; left: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,255,136,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: blobFloat 8s ease-in-out infinite;
+  }
+
+  @keyframes blobFloat {
+    0%, 100% { transform: translate(0,0); }
+    50% { transform: translate(80px, 60px); }
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .avatar-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .avatar {
+    width: 96px; height: 96px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a2a1a, #0d1f0d);
+    border: 2px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--accent);
+    box-shadow: 0 0 40px rgba(0,255,136,0.25), 0 0 80px rgba(0,255,136,0.1);
+    position: relative;
+    z-index: 1;
+  }
+
+  .avatar-ring {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,255,136,0.2);
+    animation: spinRing 8s linear infinite;
+  }
+
+  .avatar-ring::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: 50%;
+    transform: translateX(-50%);
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--accent);
+  }
+
+  @keyframes spinRing {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  .header-info { flex: 1; }
+
+  .username {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .handle {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .meta-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .meta-chip span { color: var(--text); font-weight: 500; }
+
+  .rank-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(0,255,136,0.05));
+    border: 1px solid rgba(0,255,136,0.3);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+  }
+
+  /* ── INTERNSHIP BANNER ── */
+  .banner {
+    background: linear-gradient(135deg, #1a0a2e 0%, #0d1520 50%, #0a1a0d 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 20px 28px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    animation: fadeUp 0.7s 0.1s ease both;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .banner::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--accent), #00ccff, var(--accent2));
+  }
+
+  .banner-icon { font-size: 2rem; }
+
+  .banner-text h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .banner-text p { font-size: 0.82rem; color: var(--muted); }
+
+  .jio-pill {
+    margin-left: auto;
+    background: linear-gradient(135deg, #e8000d, #ff4444);
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 8px 20px;
+    border-radius: 100px;
+    white-space: nowrap;
+    box-shadow: 0 4px 20px rgba(232,0,13,0.4);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── STATS GRID ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0,255,136,0.2);
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top left, var(--card-glow, rgba(0,255,136,0.05)), transparent 60%);
+    pointer-events: none;
+  }
+
+  .stat-card.easy { --card-glow: rgba(0,255,136,0.08); }
+  .stat-card.med  { --card-glow: rgba(255,168,0,0.08); }
+  .stat-card.hard { --card-glow: rgba(255,68,68,0.08); }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .stat-card.easy .stat-label { color: var(--accent); }
+  .stat-card.med  .stat-label { color: var(--accent2); }
+  .stat-card.hard .stat-label { color: var(--accent3); }
+
+  .stat-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-card.easy .stat-number { color: var(--accent); }
+  .stat-card.med  .stat-number { color: var(--accent2); }
+  .stat-card.hard .stat-number { color: var(--accent3); }
+
+  .stat-total {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  /* Progress bar */
+  .stat-bar {
+    margin-top: 14px;
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+
+  .stat-bar-fill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 1s ease;
+    animation: barGrow 1.5s ease both;
+  }
+
+  @keyframes barGrow {
+    from { width: 0%; }
+  }
+
+  .stat-card.easy .stat-bar-fill { background: var(--accent); width: 18.3%; }
+  .stat-card.med  .stat-bar-fill { background: var(--accent2); width: 12.8%; }
+  .stat-card.hard .stat-bar-fill { background: var(--accent3); width: 4.6%; }
+
+  /* ── METRICS ROW ── */
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+
+  .metric {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 16px;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .metric:hover { transform: translateY(-3px); }
+
+  .metric-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--accent4);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .metric-key {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── TWO COLUMN ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.7s 0.4s ease both;
+  }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .panel-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .panel-title::before {
+    content: '';
+    display: block;
+    width: 3px; height: 14px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  /* Donut chart */
+  .donut-wrap {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .donut-svg { flex-shrink: 0; }
+
+  .donut-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .donut-total-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text);
+  }
+
+  .donut-total-label {
+    font-size: 0.65rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .donut-container { position: relative; width: 120px; height: 120px; }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 0.82rem;
+  }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .legend-name { color: var(--muted); flex: 1; }
+  .legend-num {
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  /* Badges */
+  .badge-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .badge-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: border-color 0.3s;
+  }
+
+  .badge-item:hover { border-color: rgba(0,255,136,0.2); }
+
+  .badge-icon { font-size: 1.4rem; }
+
+  .badge-info { flex: 1; min-width: 0; }
+
+  .badge-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .badge-date {
+    font-size: 0.65rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .badge-active {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ── ACTIVITY HEATMAP ── */
+  .heatmap-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.7s 0.45s ease both;
+  }
+
+  .heatmap-stats {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+  }
+
+  .heatmap-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .heatmap-stat-val {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--accent);
+  }
+
+  .heatmap-stat-key {
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .heatmap-grid {
+    display: flex;
+    gap: 3px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .heatmap-col { display: flex; flex-direction: column; gap: 3px; }
+
+  .heatmap-cell {
+    width: 12px; height: 12px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.04);
+    transition: background 0.2s;
+  }
+
+  .heatmap-cell[data-level="1"] { background: rgba(0,255,136,0.2); }
+  .heatmap-cell[data-level="2"] { background: rgba(0,255,136,0.45); }
+  .heatmap-cell[data-level="3"] { background: rgba(0,255,136,0.7); }
+  .heatmap-cell[data-level="4"] { background: rgba(0,255,136,1); }
+
+  /* ── RECENT PROBLEMS ── */
+  .recent-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.7s 0.5s ease both;
+  }
+
+  .problem-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .problem-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .problem-item:hover {
+    border-color: rgba(0,255,136,0.15);
+    transform: translateX(4px);
+  }
+
+  .problem-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    width: 38px;
+    flex-shrink: 0;
+  }
+
+  .problem-name {
+    flex: 1;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .problem-diff {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+
+  .diff-easy {
+    background: rgba(0,255,136,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(0,255,136,0.2);
+  }
+
+  .diff-med {
+    background: rgba(255,168,0,0.1);
+    color: var(--accent2);
+    border: 1px solid rgba(255,168,0,0.2);
+  }
+
+  .diff-hard {
+    background: rgba(255,68,68,0.1);
+    color: var(--accent3);
+    border: 1px solid rgba(255,68,68,0.2);
+  }
+
+  .problem-check {
+    color: var(--accent);
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  /* ── CONTEST ── */
+  .contest-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.7s 0.55s ease both;
+  }
+
+  .contest-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .contest-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .contest-icon.weekly  { background: rgba(79,195,247,0.1); border: 1px solid rgba(79,195,247,0.2); }
+  .contest-icon.biweekly { background: rgba(255,168,0,0.1); border: 1px solid rgba(255,168,0,0.2); }
+
+  .contest-info { flex: 1; }
+
+  .contest-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .contest-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+
+  .contest-rank {
+    text-align: right;
+  }
+
+  .contest-rank-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--accent4);
+  }
+
+  .contest-rank-label {
+    font-size: 0.65rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── MAY ACTIVITY ── */
+  .may-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.7s 0.6s ease both;
+  }
+
+  .may-highlight {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .may-badge {
+    flex: 1;
+    min-width: 80px;
+    background: var(--surface2);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .may-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .may-label {
+    font-size: 0.68rem;
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+  }
+
+  /* Bar chart */
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 70px;
+  }
+
+  .bar {
+    flex: 1;
+    border-radius: 3px 3px 0 0;
+    min-height: 4px;
+    transition: opacity 0.2s;
+  }
+
+  .bar:hover { opacity: 0.8; }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.7s 0.65s ease both;
+  }
+
+  .footer-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
+  }
+
+  .footer-sub {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .footer-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 8px 18px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .footer-link:hover { color: var(--accent); border-color: rgba(0,255,136,0.3); }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .metrics-row { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .contest-row { grid-template-columns: 1fr; }
+    .header { flex-direction: column; text-align: center; }
+    .meta-row { justify-content: center; }
+    .banner { flex-direction: column; text-align: center; }
+    .jio-pill { margin-left: 0; }
+  }
+
+  /* Pulse animation for active indicator */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .online-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse 2s infinite;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="avatar-wrap">
+      <div class="avatar">R</div>
+      <div class="avatar-ring"></div>
+    </div>
+    <div class="header-info">
+      <div class="username">Raja7078 <span class="online-dot"></span></div>
+      <div class="handle">// ry347912-cyber · India</div>
+      <div class="meta-row">
+        <div class="rank-badge">🏆 Global Rank <span style="font-weight:700; color:#fff; margin-left:4px">#215,422</span></div>
+        <div class="meta-chip">🔥 Streak <span>42 days</span></div>
+        <div class="meta-chip">📅 Active <span>118 days</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JIO BANNER -->
+  <div class="banner">
+    <div class="banner-icon">🚀</div>
+    <div class="banner-text">
+      <h3>Applying for Software Engineering Internship</h3>
+      <p>Consistent problem-solver with strong DSA fundamentals · C++ Expert · 480+ problems solved</p>
+    </div>
+    <div class="jio-pill">JIO 2026</div>
+  </div>
+
+  <!-- STATS GRID -->
+  <div class="stats-grid">
+    <div class="stat-card easy">
+      <div class="stat-label">Easy</div>
+      <div class="stat-number">173</div>
+      <div class="stat-total">out of 944 total</div>
+      <div class="stat-bar"><div class="stat-bar-fill"></div></div>
+    </div>
+    <div class="stat-card med">
+      <div class="stat-label">Medium</div>
+      <div class="stat-number">264</div>
+      <div class="stat-total">out of 2,056 total</div>
+      <div class="stat-bar"><div class="stat-bar-fill"></div></div>
+    </div>
+    <div class="stat-card hard">
+      <div class="stat-label">Hard</div>
+      <div class="stat-number">43</div>
+      <div class="stat-total">out of 934 total</div>
+      <div class="stat-bar"><div class="stat-bar-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- METRICS -->
+  <div class="metrics-row">
+    <div class="metric">
+      <div class="metric-val">480</div>
+      <div class="metric-key">Total Solved</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val">977</div>
+      <div class="metric-key">Submissions / Year</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val">42</div>
+      <div class="metric-key">Max Streak</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val">4</div>
+      <div class="metric-key">Badges Earned</div>
+    </div>
+  </div>
+
+  <!-- TWO COLUMN: DONUT + BADGES -->
+  <div class="two-col">
+    <div class="panel">
+      <div class="panel-title">Difficulty Breakdown</div>
+      <div class="donut-wrap">
+        <div class="donut-container">
+          <svg class="donut-svg" viewBox="0 0 120 120" width="120" height="120">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="14"/>
+            <!-- Hard: 43 -->
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#ff4444" stroke-width="14"
+              stroke-dasharray="56.3 257.1" stroke-dashoffset="0"
+              stroke-linecap="round" transform="rotate(-90 60 60)"/>
+            <!-- Med: 264 -->
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#ffa800" stroke-width="14"
+              stroke-dasharray="174.8 257.1" stroke-dashoffset="-56.3"
+              stroke-linecap="round" transform="rotate(-90 60 60)"/>
+            <!-- Easy: 173 -->
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#00ff88" stroke-width="14"
+              stroke-dasharray="114.5 257.1" stroke-dashoffset="-231.1"
+              stroke-linecap="round" transform="rotate(-90 60 60)"/>
+            <text x="60" y="55" text-anchor="middle" fill="#e8eaf0" font-family="Syne" font-size="18" font-weight="800">480</text>
+            <text x="60" y="70" text-anchor="middle" fill="#6b7280" font-family="DM Mono" font-size="8">SOLVED</text>
+          </svg>
+        </div>
+        <div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#00ff88"></div>
+            <span class="legend-name">Easy</span>
+            <span class="legend-num">173</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#ffa800"></div>
+            <span class="legend-name">Medium</span>
+            <span class="legend-num">264</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#ff4444"></div>
+            <span class="legend-name">Hard</span>
+            <span class="legend-num">43</span>
+          </div>
+          <div style="margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.06);">
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#4fc3f7"></div>
+              <span class="legend-name">C++</span>
+              <span class="legend-num">475</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#f9a825"></div>
+              <span class="legend-name">Java</span>
+              <span class="legend-num">5</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Badges & Achievements</div>
+      <div class="badge-grid">
+        <div class="badge-item">
+          <div class="badge-icon">🏅</div>
+          <div class="badge-info">
+            <div class="badge-name">100 Days Badge</div>
+            <div class="badge-date">2026-05-14</div>
+          </div>
+          <div class="badge-active"></div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-icon">🔰</div>
+          <div class="badge-info">
+            <div class="badge-name">50 Days Badge</div>
+            <div class="badge-date">Active</div>
+          </div>
+          <div class="badge-active"></div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-icon">⭐</div>
+          <div class="badge-info">
+            <div class="badge-name">Top Interview</div>
+            <div class="badge-date">2026-05-13</div>
+          </div>
+          <div class="badge-active"></div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-icon">🎯</div>
+          <div class="badge-info">
+            <div class="badge-name">LeetCode 75</div>
+            <div class="badge-date">2026-03-26</div>
+          </div>
+          <div class="badge-active"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEATMAP (simplified visual) -->
+  <div class="heatmap-panel">
+    <div class="panel-title">Submission Activity — Past Year</div>
+    <div class="heatmap-stats">
+      <div class="heatmap-stat">
+        <div class="heatmap-stat-val">977</div>
+        <div class="heatmap-stat-key">Total Submissions</div>
+      </div>
+      <div class="heatmap-stat">
+        <div class="heatmap-stat-val">118</div>
+        <div class="heatmap-stat-key">Active Days</div>
+      </div>
+      <div class="heatmap-stat">
+        <div class="heatmap-stat-val">42</div>
+        <div class="heatmap-stat-key">Max Streak</div>
+      </div>
+    </div>
+    <div class="heatmap-grid" id="heatmap"></div>
+  </div>
+
+  <!-- RECENT PROBLEMS -->
+  <div class="recent-panel">
+    <div class="panel-title">Recent Accepted Submissions</div>
+    <div class="problem-list">
+      <div class="problem-item">
+        <div class="problem-num">#1339</div>
+        <div class="problem-name">Maximum Product of Splitted Binary Tree</div>
+        <div class="problem-diff diff-med">MED</div>
+        <div class="problem-check">✓</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">#1970</div>
+        <div class="problem-name">Last Day Where You Can Still Cross</div>
+        <div class="problem-diff diff-hard">HARD</div>
+        <div class="problem-check">✓</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">#840</div>
+        <div class="problem-name">Magic Squares In Grid</div>
+        <div class="problem-diff diff-med">MED</div>
+        <div class="problem-check">✓</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">#3379</div>
+        <div class="problem-name">Transformed Array</div>
+        <div class="problem-diff diff-easy">EASY</div>
+        <div class="problem-check">✓</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">#3640</div>
+        <div class="problem-name">Trionic Array II</div>
+        <div class="problem-diff diff-hard">HARD</div>
+        <div class="problem-check">✓</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">#1306</div>
+        <div class="problem-name">Jump Game III</div>
+        <div class="problem-diff diff-med">MED</div>
+        <div class="problem-check">✓</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">#3934</div>
+        <div class="problem-name">Smallest Unique Subarray</div>
+        <div class="problem-diff diff-hard">HARD</div>
+        <div class="problem-check">✓</div>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">#3933</div>
+        <div class="problem-name">Largest Local Values in a Matrix II</div>
+        <div class="problem-diff diff-med">MED</div>
+        <div class="problem-check">✓</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEST -->
+  <div class="contest-row">
+    <div class="contest-card">
+      <div class="contest-icon weekly">🏆</div>
+      <div class="contest-info">
+        <div class="contest-name">Weekly Contest 501</div>
+        <div class="contest-date">Sun, May 10, 2026</div>
+      </div>
+      <div class="contest-rank">
+        <div class="contest-rank-num">#24,614</div>
+        <div class="contest-rank-label">Global Rank</div>
+      </div>
+    </div>
+    <div class="contest-card">
+      <div class="contest-icon biweekly">⚡</div>
+      <div class="contest-info">
+        <div class="contest-name">Biweekly Contest 182</div>
+        <div class="contest-date">Sat, May 9, 2026</div>
+      </div>
+      <div class="contest-rank">
+        <div class="contest-rank-num">#24,491</div>
+        <div class="contest-rank-label">Global Rank</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAY 2026 ACTIVITY -->
+  <div class="may-panel">
+    <div class="panel-title">May 2026 — Monthly Sprint 🔥</div>
+    <div class="may-highlight">
+      <div class="may-badge">
+        <div class="may-num" style="color:var(--accent)">67</div>
+        <div class="may-label">Easy</div>
+      </div>
+      <div class="may-badge">
+        <div class="may-num" style="color:var(--accent2)">104</div>
+        <div class="may-label">Medium</div>
+      </div>
+      <div class="may-badge">
+        <div class="may-num" style="color:var(--accent3)">23</div>
+        <div class="may-label">Hard</div>
+      </div>
+      <div class="may-badge" style="background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(0,255,136,0.05)); border: 1px solid rgba(0,255,136,0.2);">
+        <div class="may-num" style="color:#fff">194</div>
+        <div class="may-label">Total May</div>
+      </div>
+    </div>
+    <div class="bar-chart" id="mayBars"></div>
+    <div style="display:flex; gap:16px; margin-top:10px;">
+      <span style="font-size:0.68rem; color:var(--accent); font-family:'DM Mono',monospace;">■ Easy</span>
+      <span style="font-size:0.68rem; color:var(--accent2); font-family:'DM Mono',monospace;">■ Med</span>
+      <span style="font-size:0.68rem; color:var(--accent3); font-family:'DM Mono',monospace;">■ Hard</span>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-name">Raja7078</div>
+    <div class="footer-sub">COMPETITIVE PROGRAMMER · DSA ENTHUSIAST · C++ EXPERT</div>
+    <div class="footer-links">
+      <a class="footer-link" href="https://leetcode.com/u/Raja7078/" target="_blank">🔗 leetcode.com/u/Raja7078</a>
+      <a class="footer-link" href="https://github.com/ry347912-cyber" target="_blank">⌨ ry347912-cyber</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Generate heatmap
+const heatmap = document.getElementById('heatmap');
+const weeks = 52;
+// Some pattern based on the actual activity (heavy recent months)
+const activityPattern = [];
+for (let w = 0; w < weeks; w++) {
+  const col = [];
+  for (let d = 0; d < 7; d++) {
+    // More activity in recent weeks (Feb-May)
+    let prob = 0;
+    if (w < 12) prob = 0.15;       // May-Jul (old)
+    else if (w < 20) prob = 0.2;   // Aug-Sep
+    else if (w < 28) prob = 0.3;   // Oct-Nov
+    else if (w < 36) prob = 0.5;   // Dec-Jan
+    else if (w < 44) prob = 0.7;   // Feb-Mar
+    else prob = 0.85;              // Apr-May (recent, very active)
+    
+    const r = Math.random();
+    let level = 0;
+    if (r < prob * 0.3) level = 1;
+    else if (r < prob * 0.55) level = 2;
+    else if (r < prob * 0.75) level = 3;
+    else if (r < prob) level = 4;
+    col.push(level);
+  }
+  activityPattern.push(col);
+}
+
+activityPattern.forEach(col => {
+  const colEl = document.createElement('div');
+  colEl.className = 'heatmap-col';
+  col.forEach(level => {
+    const cell = document.createElement('div');
+    cell.className = 'heatmap-cell';
+    if (level > 0) cell.setAttribute('data-level', level);
+    colEl.appendChild(cell);
+  });
+  heatmap.appendChild(colEl);
+});
+
+// May bar chart
+const mayBars = document.getElementById('mayBars');
+const days = 17; // up to May 17
+const colors = ['#00ff88', '#ffa800', '#ff4444'];
+const weights = [67/194, 104/194, 23/194];
+
+for (let i = 0; i < days; i++) {
+  const h = Math.floor(20 + Math.random() * 50);
+  const ci = Math.random() < weights[0] ? 0 : Math.random() < (weights[0]+weights[1]) ? 1 : 2;
+  const bar = document.createElement('div');
+  bar.className = 'bar';
+  bar.style.height = h + 'px';
+  bar.style.background = colors[ci];
+  bar.style.opacity = '0.8';
+  mayBars.appendChild(bar);
+}
+</script>
+</body>
+</html>
